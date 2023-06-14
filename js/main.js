@@ -88,7 +88,7 @@ const playRound = (playerSelection, computerSelection) => {
 
 
 const getPlayerChoice = () => {
-    return prompt(`what is your choice`, `rock`).toLowerCase();
+    return `rock` // DEBUGGING PURPOSES prompt(`what is your choice`, `rock`).toLowerCase();
 }
 
 
@@ -111,7 +111,7 @@ const game = (numberOfRounds) =>{
 
     for (i = 1; i <= numberOfRounds; i++) {
         console.log(`This is round ${i}`)
-        let roundResult = playRound(`rock`, getComputerChoice())
+        let roundResult = playRound(getPlayerChoice(), getComputerChoice())
 
         if (roundResult === `computer wins`) {
             computerScore = computerScore + 1
@@ -127,8 +127,8 @@ const game = (numberOfRounds) =>{
 // lo que necesito es que sume 1 punto al ganador
 // y que de
 
-// let numberOfRounds = 5 // Number(prompt(`how many rounds do you want to play?`))
-game(5)
+let numberOfRounds = 35 // Number(prompt(`how many rounds do you want to play?`))
+game(numberOfRounds)
 // console.log(typeof numberOfRounds, numberOfRounds) // añadir if para que solo se puedan introducir números
 
 // Write a NEW function called game(). -- done 
