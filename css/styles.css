@@ -1,0 +1,30 @@
+* {
+    background-color: black;
+    color: white;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+nav, footer {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.game-container {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

@@ -18,6 +18,10 @@ const getComputerChoice = () => { // if const choices was a global variable, the
     */
 }
 
+const getPlayerChoice = () => {
+    return `rock` // DEBUGGING PURPOSES prompt(`what is your choice`, `rock`).toLowerCase();
+}
+
 
 // Write a function that plays a single round of Rock Paper Scissors. 
 // The function should take two parameters - the playerSelection and computerSelection - 
@@ -87,11 +91,6 @@ const playRound = (playerSelection, computerSelection) => {
 }
 
 
-const getPlayerChoice = () => {
-    return `rock` // DEBUGGING PURPOSES prompt(`what is your choice`, `rock`).toLowerCase();
-}
-
-
 // playRound(getPlayerChoice(), getComputerChoice());
 const checkResult = (playerScore, computerScore) => {
     if (playerScore > computerScore) {
@@ -111,6 +110,7 @@ const game = (numberOfRounds) =>{
 
     for (i = 1; i <= numberOfRounds; i++) {
         console.log(`This is round ${i}`)
+        
         let roundResult = playRound(getPlayerChoice(), getComputerChoice())
 
         if (roundResult === `computer wins`) {
