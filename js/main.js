@@ -39,19 +39,20 @@ const logRoundResult = (currentRound, playerSelection, playerScore, computerSele
         computerScore: computerScore,
         roundResult: roundResult,
     }
-    console.log(roundLog)
 }
 
 let playerScore = 0;
 let computerScore = 0;
 let maxNumberOfRounds = 5 //getNumberOfRounds(); // TODO set to 5 for debugging purposes
-let currentRound = 0;
+let currentRound = 1;
 let roundLog = [];
 
 const rockSelection = document.querySelector(`.rock`)
 const paperSelection = document.querySelector(`.paper`)
 const scissorsSelection = document.querySelector(`.scissors`)
+const printLog = document.querySelector(`.printLog`)
 
+printLog.addEventListener(`click`, () => console.log(roundLog))
 
 const playRound = (playerSelection) => {
     let computerSelection = 'rock' //getComputerSelection() // TODO set to `rock` for debugging purposes
@@ -62,11 +63,11 @@ const playRound = (playerSelection) => {
     if (computerSelection === `rock`) {
         switch (playerSelection) {
             case `rock`:
-                console.log(`no winner this round`);
+                console.log(`no winner for round number ${currentRound}`);
                 roundResult = `no winner;`
                 break;
             case `paper`:
-                console.log(`player wins this round`)
+                console.log(`player wins round number ${currentRound}`)
                 roundResult = `player wins`
                 increasePlayerScore()
                 logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
@@ -74,7 +75,7 @@ const playRound = (playerSelection) => {
 
                 break;
             case `scissors`:
-                console.log(`computer wins this round`)
+                console.log(`computer wins round number ${currentRound}`)
                 roundResult = `computer wins`
                 increaseComputerScore()
                 logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
@@ -87,33 +88,33 @@ const playRound = (playerSelection) => {
     else if (computerSelection === `scissors`) {
         switch (playerSelection) {
             case `rock`:
-                console.log(`player wins this round`)
+                console.log(`player wins round number ${currentRound}`)
                 roundResult = `player wins`
                 break;
             case `paper`:
-                console.log(`computer wins this round`)
+                console.log(`computer wins round number ${currentRound}`)
                 roundResult = `computer wins`
                 break;
             case `scissors`:
-                console.log(`no winner this round`);
+                console.log(`no winner for round number ${currentRound}`);
                 roundResult = `no winner`;
                 break;
             default:
-                console.log(`please select either rock,paper or scissors`)
+                console.log(`please select either rock,paper or scissors`) 
         }
     }
     else if (computerSelection === `paper`) {
         switch (playerSelection) {
             case `rock`:
-                console.log(`computer wins this round`);
+                console.log(`computer wins round number ${currentRound}`);
                 roundResult = `computer wins`
                 break;
             case `paper`:
-                console.log(`no winner this round`)
+                console.log(`no winner for round number ${currentRound}`)
                 roundResult = `no winner`
                 break;
             case `scissors`:
-                console.log(`player wins this round`)
+                console.log(`player wins round number ${currentRound}`)
                 roundResult = `player wins`
                 break;
             default:
@@ -126,12 +127,12 @@ const playRound = (playerSelection) => {
     }
     
     if (playerScore === 5) {
-        console.log(`Game end, because player wins`)
+        console.log(`Game end, because PLAYER wins`)
         restartGame()
     }
 
     else if (computerScore === 5) {
-        console.log(`Game end, because computer wins`)
+        console.log(`Game end, because COMPUTER wins`)
         restartGame()
     }
 };
