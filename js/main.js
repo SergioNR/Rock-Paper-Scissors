@@ -17,7 +17,7 @@ const restartGame = () => {
         console.log(currentRound, playerScore, computerScore)
 }
 
-const increaseCurrentRound = (currentRound) => {
+const increaseCurrentRound = () => {
     currentRound = currentRound + 1;
 }
 
@@ -55,6 +55,7 @@ const scissorsSelection = document.querySelector(`.scissors`)
 
 const playRound = (playerSelection) => {
     let computerSelection = 'rock' //getComputerSelection() // TODO set to `rock` for debugging purposes
+    console.log(`the current round is ${currentRound}`)
     console.log(`the user has chosen ${playerSelection}`)
     console.log(`the computer has chosen ${computerSelection}`)
     let roundResult;
@@ -69,16 +70,15 @@ const playRound = (playerSelection) => {
                 roundResult = `player wins`
                 increasePlayerScore()
                 logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                // increaseCurrentRound(currentRound)
-                console.log(`new round number is ${currentRound}`)
+                increaseCurrentRound()
+
                 break;
             case `scissors`:
                 console.log(`computer wins this round`)
                 roundResult = `computer wins`
                 increaseComputerScore()
                 logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                // increaseCurrentRound(currentRound)
-                console.log(`new round number is ${currentRound}`)
+                increaseCurrentRound()
                 break;
             default:
                 console.log(`please select either rock,paper or scissors`)
@@ -126,12 +126,12 @@ const playRound = (playerSelection) => {
     }
     
     if (playerScore === 5) {
-        console.log(`Game end, player wins`)
+        console.log(`Game end, because player wins`)
         restartGame()
     }
 
     else if (computerScore === 5) {
-        console.log(`game end, computer wins`)
+        console.log(`Game end, because computer wins`)
         restartGame()
     }
 };
