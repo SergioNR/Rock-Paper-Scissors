@@ -1,3 +1,8 @@
+const rockSelection = document.querySelector(`.rock`)
+const paperSelection = document.querySelector(`.paper`)
+const scissorsSelection = document.querySelector(`.scissors`)
+const printLog = document.querySelector(`.printLog`)
+
 const getNumberOfRounds = () =>{
     let numberOfRounds = parseInt(prompt(`how many rounds do you want to play?`))
 
@@ -47,10 +52,7 @@ let maxNumberOfRounds = 5 //getNumberOfRounds(); // TODO set to 5 for debugging 
 let currentRound = 1;
 let roundLog = [];
 
-const rockSelection = document.querySelector(`.rock`)
-const paperSelection = document.querySelector(`.paper`)
-const scissorsSelection = document.querySelector(`.scissors`)
-const printLog = document.querySelector(`.printLog`)
+
 
 printLog.addEventListener(`click`, () => console.log(roundLog))
 
