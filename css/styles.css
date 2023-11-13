@@ -1,3 +1,5 @@
+
+
 * {
     background-color: black;
     color: white;
@@ -28,3 +30,26 @@ nav, footer {
     align-items: center;
 }
 
+.gameLog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.log {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    max-width: 60%;
+}
+
+.log-content {
+    margin: 0px;
+    padding: 8px 8px;
+    font-size: 24px;
+}
+
+.scoreDisplay {
+    font-size: 56px;
+}

@@ -1,8 +1,49 @@
+// Variable creation
+let playerScore = 0;
+let computerScore = 0;
+let maxNumberOfRounds = 5 //getNumberOfRounds(); // TODO set to 5 for debugging purposes
+let currentRound = 1;
+let roundLog = [];
+
+// Query Selectors
 const rockSelection = document.querySelector(`.rock`)
 const paperSelection = document.querySelector(`.paper`)
 const scissorsSelection = document.querySelector(`.scissors`)
-const printLog = document.querySelector(`.printLog`)
+const log = document.querySelector(`.log`)
+const scoreSection = document.querySelector(`.scoreSection`)
+const restartGameButton = document.querySelector(`.restartGameButton`)
 
+// HTML Elements creation
+const playerScoreDisplay = document.createElement(`p`)
+const computerScoreDisplay = document.createElement(`p`)
+const logOne = document.createElement(`p`)
+const logTwo = document.createElement(`p`)
+const logThree = document.createElement(`p`)
+
+// HTML Elements content
+logOne.textContent = `this round was won by the ${roundLog.playerSelection} with ${roundLog.playerScore} points against the ${roundLog.computerSelection} with ${roundLog.computerScore} points`
+logTwo.textContent = `test`
+logThree.textContent = `test`
+playerScoreDisplay.textContent = `player score: ${playerScore}`
+computerScoreDisplay.textContent = `computer score: ${computerScore}`
+
+// HTML Elements styling
+
+logOne.classList.add(`log-content`)
+logTwo.classList.add(`log-content`)
+logThree.classList.add(`log-content`)
+playerScoreDisplay.classList.add(`scoreDisplay`)
+computerScoreDisplay.classList.add(`scoreDisplay`)
+
+// HTML Elements appending
+scoreSection.appendChild(playerScoreDisplay)
+scoreSection.appendChild(computerScoreDisplay)
+
+log.appendChild(logOne)
+log.appendChild(logTwo)
+log.appendChild(logThree)
+
+// Functions
 const getNumberOfRounds = () =>{
     let numberOfRounds = parseInt(prompt(`how many rounds do you want to play?`))
 
@@ -18,6 +59,7 @@ const restartGame = () => {
         currentRound = 0;
         computerScore = 0;
         playerScore = 0;
+        updateResults(playerScore, computerScore);
         console.log(`game has been restarted`)
         console.log(currentRound, playerScore, computerScore)
 }
@@ -34,7 +76,6 @@ const increasePlayerScore = () => {
     playerScore = playerScore + 1;
 }
 
-
 const logRoundResult = (currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult) => {
     roundLog = {
         currentRound: currentRound,
@@ -46,15 +87,10 @@ const logRoundResult = (currentRound, playerSelection, playerScore, computerSele
     }
 }
 
-let playerScore = 0;
-let computerScore = 0;
-let maxNumberOfRounds = 5 //getNumberOfRounds(); // TODO set to 5 for debugging purposes
-let currentRound = 1;
-let roundLog = [];
-
-
-
-printLog.addEventListener(`click`, () => console.log(roundLog))
+const updateResults = (playerScore, computerScore) => {
+    playerScoreDisplay.textContent = `player score: ${playerScore}`
+    computerScoreDisplay.textContent = `computer score: ${computerScore}`
+}
 
 const playRound = (playerSelection) => {
     let computerSelection = 'rock' //getComputerSelection() // TODO set to `rock` for debugging purposes
@@ -66,7 +102,10 @@ const playRound = (playerSelection) => {
         switch (playerSelection) {
             case `rock`:
                 console.log(`no winner for round number ${currentRound}`);
-                roundResult = `no winner;`
+                roundResult = `no winner`;
+                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
+                increaseCurrentRound()
+                updateResults(playerScore, computerScore);
                 break;
             case `paper`:
                 console.log(`player wins round number ${currentRound}`)
@@ -74,6 +113,7 @@ const playRound = (playerSelection) => {
                 increasePlayerScore()
                 logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
                 increaseCurrentRound()
+                updateResults(playerScore, computerScore);
 
                 break;
             case `scissors`:
@@ -82,6 +122,7 @@ const playRound = (playerSelection) => {
                 increaseComputerScore()
                 logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
                 increaseCurrentRound()
+                updateResults(playerScore, computerScore);
                 break;
             default:
                 console.log(`please select either rock,paper or scissors`)
@@ -92,14 +133,25 @@ const playRound = (playerSelection) => {
             case `rock`:
                 console.log(`player wins round number ${currentRound}`)
                 roundResult = `player wins`
+                increasePlayerScore()
+                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
+                increaseCurrentRound()
+                updateResults(playerScore, computerScore);
                 break;
             case `paper`:
                 console.log(`computer wins round number ${currentRound}`)
                 roundResult = `computer wins`
+                increaseComputerScore()
+                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
+                increaseCurrentRound()
+                updateResults(playerScore, computerScore);
                 break;
             case `scissors`:
                 console.log(`no winner for round number ${currentRound}`);
                 roundResult = `no winner`;
+                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
+                increaseCurrentRound()
+                updateResults(playerScore, computerScore);
                 break;
             default:
                 console.log(`please select either rock,paper or scissors`) 
@@ -110,14 +162,25 @@ const playRound = (playerSelection) => {
             case `rock`:
                 console.log(`computer wins round number ${currentRound}`);
                 roundResult = `computer wins`
+                increaseComputerScore()
+                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
+                increaseCurrentRound()
+                updateResults(playerScore, computerScore);
                 break;
             case `paper`:
                 console.log(`no winner for round number ${currentRound}`)
                 roundResult = `no winner`
+                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
+                increaseCurrentRound()
+                updateResults(playerScore, computerScore);
                 break;
             case `scissors`:
                 console.log(`player wins round number ${currentRound}`)
                 roundResult = `player wins`
+                increasePlayerScore()
+                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
+                increaseCurrentRound()
+                updateResults(playerScore, computerScore);
                 break;
             default:
                 console.log(`please select either rock,paper or scissors`)
@@ -139,18 +202,10 @@ const playRound = (playerSelection) => {
     }
 };
 
-// user selects their choice
-rockSelection.addEventListener(`click`, () => playRound(`rock`))
-paperSelection.addEventListener(`click`, () => playRound(`paper`))
-scissorsSelection.addEventListener(`click`, () => playRound(`scissors`))
-
-
-// computer makes their choice
 const getComputerSelection = () => {
     const choices = [`rock`, `paper`, `scissors`]
     return choices[Math.floor(Math.random() * choices.length)]
-}
-
+} // computer makes their choice
 
 const checkResult = (playerScore, computerScore) => {
     if (playerScore > computerScore) {
@@ -163,3 +218,13 @@ const checkResult = (playerScore, computerScore) => {
         console.log(`the game is a tie with computer ${computerScore} points and player with ${playerScore} points`) 
     }
 }
+
+// EVENT LISTENERS
+
+rockSelection.addEventListener(`click`, () => playRound(`rock`))  // Listener for user choice
+paperSelection.addEventListener(`click`, () => playRound(`paper`)) // Listener for user choice
+scissorsSelection.addEventListener(`click`, () => playRound(`scissors`)) // Listener for user choice
+
+log.addEventListener(`click`, () => console.log(roundLog))
+
+restartGameButton.addEventListener(`click`, () => restartGame());
