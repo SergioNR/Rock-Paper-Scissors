@@ -48,7 +48,6 @@ const displayCurrentRound = () => {
     if (currentRound === 0) {
         currentRoundDisplay.textContent = `Game is yet to start. Next round will be round ${currentRound + 1}`;
         currentRound = currentRound + 1;
-
     }
     else {
         currentRoundDisplay.textContent = `current round: ${currentRound}. Next round will be round ${currentRound + 1}`;
@@ -77,6 +76,7 @@ scoreSection.appendChild(computerScoreDisplay)
 
 
 
+
 // log.appendChild(logOne) // TODO finish this section
 // log.appendChild(logTwo)
 // log.appendChild(logThree)
@@ -93,7 +93,13 @@ const getNumberOfRounds = () =>{
     }
 }
 
-const publishRoundWinner = (roundResult) => {
+const printPlayersChoices = (playerSelection, computerSelection) => {
+    playerChoice.textContent = `player chose ${playerSelection}`
+    computerChoice.textContent = `computer chose ${computerSelection}`
+}
+
+const printRoundWinner = (roundResult) => {
+    console.log(roundResult)
     if (roundResult === `player wins`) {
         roundConclusion.textContent = `player wins for round ${currentRound}`;
         playersChoices.appendChild(roundConclusion)
@@ -104,18 +110,24 @@ const publishRoundWinner = (roundResult) => {
     }
     else {
         roundConclusion.textContent = `no winner for round ${currentRound}`;
-        playersChoices.appendChild(roundConclusion)
-        
+        playersChoices.appendChild(roundConclusion)     
     }
+}
+
+const removePlayerChoices = () => {
+    playerChoice.textContent = ``;
+    computerChoice.textContent = ``;
+    roundConclusion.textContent = ``;
 }
 
 const restartGame = () => {
         currentRound = 0;
         computerScore = 0;
         playerScore = 0;
-        updateResults(playerScore, computerScore);
+        displayCurrentRound()
+        removePlayerChoices();
+        updateResults();
         console.log(`game has been restarted`)
-        console.log(currentRound, playerScore, computerScore)
 }
 
 const increaseCurrentRound = () => {
@@ -152,56 +164,51 @@ const updateCurrentRound = () => {
     currentRoundDisplay.textContent = `current round: ${currentRound}. Next play will be round ${currentRound + 1}`
 }
 
-const updateResults = (playerScore, computerScore) => {
-    
+const updateResults = () => { // no need to send the variable because its a global variable
     playerScoreDisplay.textContent = `player score: ${playerScore}`
     computerScoreDisplay.textContent = `computer score: ${computerScore}`
 }
 
-const endRound = (currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult) => {
-    publishRoundWinner(roundResult)
-    logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-    increaseCurrentRound()
-    updateResults(playerScore, computerScore);
+const endRound = (roundResult, playerSelection, computerSelection, ) => {
+    console.log(`aux ${roundResult}`) //! roundResult value is not getting here
+    printRoundWinner(roundResult);
+    // logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult);
+    increaseCurrentRound(); // No need to pass the parameters because they are global variables
+    updateResults(); // No need to pass the parameters because they are global variables
 }
 
 const playRound = (playerSelection) => {
     updateCurrentRound()
-    playerSelection = `scissors`; // TODO delete this before deployment, debugging purposes
-    let computerSelection = `paper` // TODO replace before deployment, debugging purposes getComputerSelection(); 
+    // playerSelection = `rock`; //! DEBUG // TODO delete this before deployment, debugging purposes
+    // let computerSelection = `rock` //! DEBUG // TODO replace before deployment, debugging purposes getComputerSelection(); 
+    let computerSelection = getComputerSelection()
     console.log(`the current round is ${currentRound}`)
     console.log(`the user has chosen ${playerSelection}`)
     console.log(`the computer has chosen ${computerSelection}`)
     let roundResult;
 
-    playerChoice.textContent = `player chose ${playerSelection}`
-    computerChoice.textContent = `computer chose ${computerSelection}`
+    printPlayersChoices(playerSelection, computerSelection)
+    
 
     if (computerSelection === `rock`) {
         switch (playerSelection) {
             case `rock`:
                 console.log(`no winner for round number ${currentRound}`);
                 roundResult = `no winner`;
-                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                increaseCurrentRound()
-                updateResults(playerScore, computerScore);
+                endRound(roundResult, playerSelection, computerSelection)
                 break;
             case `paper`:
                 console.log(`player wins round number ${currentRound}`)
                 roundResult = `player wins`
                 increasePlayerScore()
-                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                increaseCurrentRound()
-                updateResults(playerScore, computerScore);
+                endRound(roundResult, playerSelection, computerSelection)
 
                 break;
             case `scissors`:
                 console.log(`computer wins round number ${currentRound}`)
                 roundResult = `computer wins`
                 increaseComputerScore()
-                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                increaseCurrentRound()
-                updateResults(playerScore, computerScore);
+                endRound(roundResult, playerSelection, computerSelection)
                 break;
             default:
                 console.log(`please select either rock,paper or scissors`)
@@ -213,24 +220,18 @@ const playRound = (playerSelection) => {
                 console.log(`player wins round number ${currentRound}`)
                 roundResult = `player wins`
                 increasePlayerScore()
-                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                increaseCurrentRound()
-                updateResults(playerScore, computerScore);
+                endRound(roundResult, playerSelection, computerSelection)
                 break;
             case `paper`:
                 console.log(`computer wins round number ${currentRound}`)
                 roundResult = `computer wins`
                 increaseComputerScore()
-                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                increaseCurrentRound()
-                updateResults(playerScore, computerScore);
+                endRound(roundResult, playerSelection, computerSelection)
                 break;
             case `scissors`:
                 console.log(`no winner for round number ${currentRound}`);
                 roundResult = `no winner`;
-                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                increaseCurrentRound()
-                updateResults(playerScore, computerScore);
+                endRound(roundResult, playerSelection, computerSelection)
                 break;
             default:
                 console.log(`please select either rock,paper or scissors`) 
@@ -242,22 +243,19 @@ const playRound = (playerSelection) => {
                 console.log(`computer wins round number ${currentRound}`);
                 roundResult = `computer wins`
                 increaseComputerScore()
-                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                increaseCurrentRound()
-                updateResults(playerScore, computerScore);
+                endRound(roundResult, playerSelection, computerSelection)
                 break;
             case `paper`:
                 console.log(`no winner for round number ${currentRound}`)
                 roundResult = `no winner`
-                logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult)
-                increaseCurrentRound()
-                updateResults(playerScore, computerScore);
+                endRound(roundResult, playerSelection, computerSelection)
                 break;
             case `scissors`:
                 console.log(`player wins round number ${currentRound}`)
                 roundResult = `player wins`
+
                 increasePlayerScore()
-                endRound()
+                endRound(roundResult, playerSelection, computerSelection)
                 break;
             default:
                 console.log(`please select either rock,paper or scissors`)
