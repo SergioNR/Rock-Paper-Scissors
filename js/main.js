@@ -12,6 +12,7 @@ const scissorsSelection = document.querySelector(`.scissors`)
 const log = document.querySelector(`.log`)
 const scoreSection = document.querySelector(`.scoreSection`)
 const restartGameButton = document.querySelector(`.restartGameButton`)
+const playersChoices = document.querySelector(`.playersChoices`)
 
 // HTML Elements creation
 const playerScoreDisplay = document.createElement(`p`)
@@ -19,6 +20,8 @@ const computerScoreDisplay = document.createElement(`p`)
 const logOne = document.createElement(`p`)
 const logTwo = document.createElement(`p`)
 const logThree = document.createElement(`p`)
+const playerChoice = document.createElement(`p`)
+const computerChoice = document.createElement(`p`)
 
 // HTML Elements content
 logOne.textContent = `this round was won by the ${roundLog.playerSelection} with ${roundLog.playerScore} points against the ${roundLog.computerSelection} with ${roundLog.computerScore} points`
@@ -26,6 +29,8 @@ logTwo.textContent = `test`
 logThree.textContent = `test`
 playerScoreDisplay.textContent = `player score: ${playerScore}`
 computerScoreDisplay.textContent = `computer score: ${computerScore}`
+playerChoice.textContent = `player chose ${roundLog.playerSelection}`
+computerChoice.textContent = `computer chose ${roundLog.computerSelection}`
 
 // HTML Elements styling
 
