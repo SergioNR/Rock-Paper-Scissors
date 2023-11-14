@@ -9,7 +9,14 @@ body {
     height: 100vh;
 }
 
-nav, footer {
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
     display: flex;
     justify-content: space-around;
 
