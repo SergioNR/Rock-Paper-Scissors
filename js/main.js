@@ -2,7 +2,7 @@
 let playerScore = 0;
 let computerScore = 0;
 let maxNumberOfRounds = 5; //getNumberOfRounds(); // TODO set to 5 for debugging purposes
-let currentRound = 0;
+let roundNumber = 0;
 let roundLog = [];
 
 // Query Selectors
@@ -19,6 +19,8 @@ const restartGameButton = document.querySelector(`.restartGameButton`);
 const playersChoices = document.querySelector(`.playersChoices`);
 
 const header = document.querySelector(`.header`);
+
+const printLogButton = document.querySelector(`.printLogButton`);
 
 // HTML Elements creation
 const playerScoreDisplay = document.createElement(`p`);
@@ -40,14 +42,14 @@ playerScoreDisplay.textContent = `player score: ${playerScore}`;
 computerScoreDisplay.textContent = `computer score: ${computerScore}`;
 
 const displayCurrentRound = () => {
-  if (currentRound === 0) {
+  if (roundNumber === 0) {
     currentRoundDisplay.textContent = `Game is yet to start. Next round will be round ${
-      currentRound + 1
+      roundNumber + 1
     }`;
-    currentRound = currentRound + 1;
+    roundNumber = roundNumber + 1;
   } else {
-    currentRoundDisplay.textContent = `current round: ${currentRound}. Next round will be round ${
-      currentRound + 1
+    currentRoundDisplay.textContent = `current round: ${roundNumber}. Next round will be round ${
+      roundNumber + 1
     }`;
   }
 };
@@ -86,13 +88,13 @@ const printPlayersChoices = (playerSelection, computerSelection) => {
 const printRoundWinner = (roundResult) => {
   console.log(roundResult);
   if (roundResult === `player wins`) {
-    roundConclusion.textContent = `player wins for round ${currentRound}`;
+    roundConclusion.textContent = `player wins for round ${roundNumber}`;
     playersChoices.appendChild(roundConclusion);
   } else if (roundResult === `computer wins`) {
-    roundConclusion.textContent = `computer wins for round ${currentRound}`;
+    roundConclusion.textContent = `computer wins for round ${roundNumber}`;
     playersChoices.appendChild(roundConclusion);
   } else {
-    roundConclusion.textContent = `no winner for round ${currentRound}`;
+    roundConclusion.textContent = `no winner for round ${roundNumber}`;
     playersChoices.appendChild(roundConclusion);
   }
 };
@@ -109,7 +111,7 @@ const clearRoundLog = () => {
 }
 
 const restartGame = () => {
-  currentRound = 0;
+  roundNumber = 0;
   computerScore = 0;
   playerScore = 0;
   displayCurrentRound();
@@ -120,8 +122,8 @@ const restartGame = () => {
 };
 
 const increaseCurrentRound = () => {
-  console.log(`the current round is ${currentRound}`);
-  currentRound = currentRound + 1;
+  console.log(`the current round is ${roundNumber}`);
+  roundNumber = roundNumber + 1;
 };
 
 const increaseComputerScore = () => {
@@ -134,29 +136,35 @@ const increasePlayerScore = () => {
 
 const printRoundLog = () => {
     let logText = ``;
+    console.log(roundLog)
     for(i = 0; i < roundLog.length; i++) {
-        logText += `for round ${roundLog[i].currentRound}, player chose ${roundLog[i].playerChoice} and computer chose ${roundLog[i].computerChoice} so the winner is ${roundLog[i].roundResult}. The score is Player: ${roundLog[i].playerScore} - Computer: ${roundLog[i].computerScore} \n`;
+        
+        logText = logText + `for round ${roundLog[i].roundNumber}, 
+        player chose ${roundLog[i].playerSelection}
+        and computer chose ${roundLog[i].computerSelection}
+        so the winner is ${roundLog[i].roundResult}.
+        The score is Player: ${roundLog[i].playerScore}
+        - Computer: ${roundLog[i].computerScore} \n`;
     }
     logPrint.textContent = logText;
     log.appendChild(logPrint)
 }
 
-const logRoundResult = (currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult) => {
-  roundLog.push({
-    currentRound: `${currentRound}`,
-    playerSelection: `${playerSelection}`,
-    playerScore: `${playerScore}`,
-    computerSelection: `${computerSelection}`,
-    computerScore: `${computerScore}`,
-    roundResult: `${roundResult}`
-  });
-  console.log(roundLog) // TODO check why the computer selection and player selection are not being pushed to printRoundLog() function - and they are returning undefined
+const logRoundResult = (roundNumber, playerSelection, playerScore, computerSelection, computerScore, roundResult) => {
+        roundLog.push({
+            roundNumber: `${roundNumber}`,
+            playerSelection: `${playerSelection}`,
+            playerScore: `${playerScore}`,
+            computerSelection: `${computerSelection}`,
+            computerScore: `${computerScore}`,
+            roundResult: `${roundResult}`
+        });
   printRoundLog();
 };
 
 const updateCurrentRound = () => {
-  currentRoundDisplay.textContent = `current round: ${currentRound}. Next play will be round ${
-    currentRound + 1
+  currentRoundDisplay.textContent = `current round: ${roundNumber}. Next play will be round ${
+    roundNumber + 1
   }`;
 };
 
@@ -168,7 +176,7 @@ const updatePlayerScores = () => {
 
 const endRound = (roundResult, playerSelection, computerSelection) => {
   printRoundWinner(roundResult);
-  logRoundResult(currentRound, playerSelection, playerScore, computerSelection, computerScore, roundResult);
+  logRoundResult(roundNumber, playerSelection, playerScore, computerSelection, computerScore, roundResult);
   increaseCurrentRound(); // No need to pass the parameters because they are global variables
   updatePlayerScores(); // No need to pass the parameters because they are global variables
 };
@@ -178,7 +186,7 @@ const playRound = (playerSelection) => {
   // playerSelection = `rock`; //! DEBUG - Comment out this line before deployment
   // let computerSelection = `rock` //! DEBUG - Comment out this line before deployment
   let computerSelection = getComputerSelection(); //! UNCOMMENT THIS LINE BEFORE DEPLOYMENT
-  console.log(`the current round is ${currentRound}`);
+  console.log(`the current round is ${roundNumber}`);
   console.log(`the user has chosen ${playerSelection}`);
   console.log(`the computer has chosen ${computerSelection}`);
   let roundResult;
@@ -188,19 +196,19 @@ const playRound = (playerSelection) => {
   if (computerSelection === `rock`) {
     switch (playerSelection) {
       case `rock`:
-        console.log(`no winner for round number ${currentRound}`);
+        console.log(`no winner for round number ${roundNumber}`);
         roundResult = `no winner`;
         endRound(roundResult, playerSelection, computerSelection);
         break;
       case `paper`:
-        console.log(`player wins round number ${currentRound}`);
+        console.log(`player wins round number ${roundNumber}`);
         roundResult = `player wins`;
         increasePlayerScore();
         endRound(roundResult, playerSelection, computerSelection);
 
         break;
       case `scissors`:
-        console.log(`computer wins round number ${currentRound}`);
+        console.log(`computer wins round number ${roundNumber}`);
         roundResult = `computer wins`;
         increaseComputerScore();
         endRound(roundResult, playerSelection, computerSelection);
@@ -211,19 +219,19 @@ const playRound = (playerSelection) => {
   } else if (computerSelection === `scissors`) {
     switch (playerSelection) {
       case `rock`:
-        console.log(`player wins round number ${currentRound}`);
+        console.log(`player wins round number ${roundNumber}`);
         roundResult = `player wins`;
         increasePlayerScore();
         endRound(roundResult, playerSelection, computerSelection);
         break;
       case `paper`:
-        console.log(`computer wins round number ${currentRound}`);
+        console.log(`computer wins round number ${roundNumber}`);
         roundResult = `computer wins`;
         increaseComputerScore();
         endRound(roundResult, playerSelection, computerSelection);
         break;
       case `scissors`:
-        console.log(`no winner for round number ${currentRound}`);
+        console.log(`no winner for round number ${roundNumber}`);
         roundResult = `no winner`;
         endRound(roundResult, playerSelection, computerSelection);
         break;
@@ -233,18 +241,18 @@ const playRound = (playerSelection) => {
   } else if (computerSelection === `paper`) {
     switch (playerSelection) {
       case `rock`:
-        console.log(`computer wins round number ${currentRound}`);
+        console.log(`computer wins round number ${roundNumber}`);
         roundResult = `computer wins`;
         increaseComputerScore();
         endRound(roundResult, playerSelection, computerSelection);
         break;
       case `paper`:
-        console.log(`no winner for round number ${currentRound}`);
+        console.log(`no winner for round number ${roundNumber}`);
         roundResult = `no winner`;
         endRound(roundResult, playerSelection, computerSelection);
         break;
       case `scissors`:
-        console.log(`player wins round number ${currentRound}`);
+        console.log(`player wins round number ${roundNumber}`);
         roundResult = `player wins`;
 
         increasePlayerScore();
@@ -255,7 +263,7 @@ const playRound = (playerSelection) => {
     }
   }
 
-  if (currentRound === maxNumberOfRounds) {
+  if (roundNumber === maxNumberOfRounds) {
   } // TODO add check for end of game by rounds
 
   if (playerScore === 5) {
@@ -290,6 +298,6 @@ rockSelection.addEventListener(`click`, () => playRound(`rock`)); // Listener fo
 paperSelection.addEventListener(`click`, () => playRound(`paper`)); // Listener for user choice
 scissorsSelection.addEventListener(`click`, () => playRound(`scissors`)); // Listener for user choice
 
-log.addEventListener(`click`, () => console.log(roundLog));
+printLogButton.addEventListener(`click`, () => console.log(roundLog));
 
 restartGameButton.addEventListener(`click`, () => restartGame());
