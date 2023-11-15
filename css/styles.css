@@ -9,7 +9,14 @@ body {
     height: 100vh;
 }
 
-nav, footer {
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
     display: flex;
     justify-content: space-around;
 
@@ -28,3 +35,26 @@ nav, footer {
     align-items: center;
 }
 
+.gameLog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.log {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    max-width: 60%;
+}
+
+.log-content {
+    margin: 0px;
+    padding: 8px 8px;
+    font-size: 24px;
+}
+
+.scoreDisplay {
+    font-size: 56px;
+}

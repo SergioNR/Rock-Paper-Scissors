@@ -4,34 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./js/main.js"></script>
+    <script defer src="./js/main.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <nav>
+    <section class="header">
         <h1>Rock, Paper, Scissors</h1>
-    </nav>
+    </section>
 
     <section id="game" class="game-container">
     <div class="info-container">
-        <div>
-            <h2>The game consists of:</h2>
+        <div class="playersChoices">
+            <p>The game will go on for X rounds or the first player to reach 5 points</p>
+            <h2>Choices are:</h2> 
         </div>
 
-        <div class="score">
-            <div class="playerScore">
+        <div class="scoreSection">
 
-            </div>
-
-            <div class="computerScore">
-
-            </div>
         </div>
+        <div class="bottom-half">
+            <div class="playerChoices">
+                <button class="rock userChoice">Rock</button>
+                <button class="paper userChoice">Paper</button>
+                <button class="scissors userChoice">Scissors</button>
+            </div>
+            <div class="otherOptions">
+                <button class="printLogButton">print log</button>
+                <button class="restartGameButton">Restart game</button>
+            </div>
 
-        <div class="playerChoices">
-            <button class="option">Rock</button>
-            <button class="option">Paper</button>
-            <button class="option">Scissors</button>
+            <div class="gameLog">
+                <h2>Game Logging</h2>
+                <div class="log">
+
+                </div>
+            </div>
         </div>
     </div>
     </section>
