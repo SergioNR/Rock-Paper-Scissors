@@ -103,7 +103,7 @@ const removePlayerChoices = () => {
   roundConclusion.textContent = ``;
 };
 
-const removeRoundLog = () => {
+const clearRoundLog = () => {
     roundLog = [];
     logPrint.textContent = ``;
 }
@@ -115,7 +115,7 @@ const restartGame = () => {
   displayCurrentRound();
   removePlayerChoices();
   updatePlayerScores();
-  removeRoundLog();
+  clearRoundLog();
   console.log(`game has been restarted`);
 };
 
